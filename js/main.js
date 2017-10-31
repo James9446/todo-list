@@ -1,21 +1,24 @@
-// Watch and Code todo app version 3 
+// Watch and Code todo app version 4
 
-// It should store todos array on an object
-// It should have a method to display todos
-// It should have a method to add todos
-// It should have a method to change a todo
-// It should have a function to delete todos
+// todoList.addTodo should add objects
+// todoList.changeTodo should change todoText property
+// todoList.toggleCompleted should change the completed property
+
 var todoList = {
-	todos: ["item 1", "item 2", "item 3"],
+	todos: [],
 	displayTodos: function() {
 		console.log("My todos:", this.todos);
 	},
-	addTodo: function(newTodo) {
-		this.todos.push(newTodo);
+	addTodo: function(todoTextParam) {
+		this.todos.push({
+			todoText: todoTextParam,
+			completed: false
+		});
 		this.displayTodos();
 	},
-	changeTodo: function(index, newValue) {
-		this.todos[index] = newValue;
+	changeTodo: function(index, todoTextParam) {
+		// this.todos[index] = newValue;
+		this.todos[index].todoText = todoTextParam;
 		this.displayTodos();
 	},
 	deleteTodo: function(index, numberDeleted) {
@@ -24,10 +27,18 @@ var todoList = {
 		}
 		this.todos.splice(index, numberDeleted);
 		this.displayTodos();
+	},
+	toggleCompleted: function(index) {
+		var todo = this.todos[index];
+		// todo.completed = !todo.completed; instead of this.todos[position].completed = !this.todos[position].completed;
+		todo.completed = !todo.completed;
+		this.displayTodos();
 	}
 }
 
-todoList.displayTodos();
+
+// todoList.displayTodos();
 todoList.addTodo("some stuff");
 todoList.changeTodo(0, "changed");
-todoList.deleteTodo(2, 2);
+todoList.toggleCompleted(0);
+// todoList.deleteTodo(2, 2);
