@@ -1,34 +1,33 @@
-// Watch and Code todo app version 2 
+// Watch and Code todo app version 3 
 
-var todos = ["item 1", "item 2", "item 3"];
-
-// It should have a function to display todos
-function displayTodos() {
-	console.log("My todos:", todos);
-}
-
-// It should have a function to add todos
-function addTodo(newTodo) {
-	todos.push(newTodo);
-	displayTodos();
-}
-
-// It should have a function to change a todo
-function changeTodo(index, newValue) {
-	todos[index] = newValue;
-	displayTodos();
-}
-
+// It should store todos array on an object
+// It should have a method to display todos
+// It should have a method to add todos
+// It should have a method to change a todo
 // It should have a function to delete todos
-function deleteTodo(index, numberDeleted) {
-	if (numberDeleted === undefined) {
-		numberDeleted = 1;
+var todoList = {
+	todos: ["item 1", "item 2", "item 3"],
+	displayTodos: function() {
+		console.log("My todos:", this.todos);
+	},
+	addTodo: function(newTodo) {
+		this.todos.push(newTodo);
+		this.displayTodos();
+	},
+	changeTodo: function(index, newValue) {
+		this.todos[index] = newValue;
+		this.displayTodos();
+	},
+	deleteTodo: function(index, numberDeleted) {
+		if (numberDeleted === undefined) {
+			numberDeleted = 1;
+		}
+		this.todos.splice(index, numberDeleted);
+		this.displayTodos();
 	}
-	todos.splice(index, numberDeleted);
-	displayTodos();
 }
 
-displayTodos();
-addTodo("some stuff");
-changeTodo(0, "changed");
-deleteTodo(2, 2);
+todoList.displayTodos();
+todoList.addTodo("some stuff");
+todoList.changeTodo(0, "changed");
+todoList.deleteTodo(2, 2);
