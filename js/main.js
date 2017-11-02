@@ -1,7 +1,8 @@
-// Watch and Code todo app version 6
+// Watch and Code todo app version 7 HTML and the DOM
 
-// .toggleAll If everything's true, make everything false
-// .toggleAll Otherwise make everything true
+// There should be a "Display todos" button and a "Toggle all" button in the app
+// Clicking "Display todos" should run todoList.displayTodos()
+// Clicking "Toggle all" should run todoList.toggleAll()
 
 var todoList = {
 	todos: [],
@@ -67,6 +68,16 @@ var todoList = {
 	}
 }
 
+var displayTodosButton = document.getElementById("displayTodosButton");
+var toggleAllButton = document.getElementById("toggleAllButton");
+
+displayTodosButton.addEventListener("click", function() {
+	todoList.displayTodos();
+});
+
+toggleAllButton.addEventListener("click", function() {
+	todoList.toggleAll();
+}); 
 
 todoList.displayTodos();
 todoList.addTodoObject("first");
