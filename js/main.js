@@ -1,8 +1,7 @@
-// Watch and Code todo app version 5
+// Watch and Code todo app version 6
 
-// displayTodos should show .todoText
-// displayTodos should tell you if .todos is empty
-// displayTodos should show .completed
+// .toggleAll If everything's true, make everything false
+// .toggleAll Otherwise make everything true
 
 var todoList = {
 	todos: [],
@@ -44,12 +43,44 @@ var todoList = {
 		// todo.completed = !todo.completed; instead of this.todos[position].completed = !this.todos[position].completed;
 		todo.completed = !todo.completed;
 		this.displayTodos();
+	},
+	toggleAll: function() {
+		var totalTodos = this.todos.length;
+		var completedTodos = 0;
+		for (var i = 0; i < this.todos.length; i++) {
+			if (this.todos[i].completed === true) {
+				completedTodos++;
+			}
+		}
+		if (completedTodos === totalTodos) {
+			for (var i = 0; i < this.todos.length; i++) {
+				this.todos[i].completed = false;
+			}
+		} else {
+			for (var i = 0; i < this.todos.length; i++) {
+				if (this.todos[i].completed === false) {
+					this.todos[i].completed = true;
+				}
+			}
+		}
+	this.displayTodos();
 	}
 }
 
 
 todoList.displayTodos();
-todoList.addTodoObject("some stuff");
-todoList.changeTodo(0, "changed");
+todoList.addTodoObject("first");
+todoList.addTodoObject("second");
+todoList.addTodoObject("third");
+todoList.addTodoObject("fourth");
+todoList.addTodoObject("fifth");
+todoList.addTodoObject("sixth");
+// todoList.changeTodo(0, "changed");
 todoList.toggleCompleted(0);
+// todoList.toggleCompleted(1);
+todoList.toggleCompleted(2);
+todoList.toggleCompleted(3);
+todoList.toggleCompleted(4);
+todoList.toggleCompleted(5);
 // todoList.deleteTodo(2, 2);
+todoList.toggleAll();
