@@ -1,8 +1,10 @@
-// Watch and Code todo app version 9 Escape from the console 
+// Watch and Code todo app version 10 Click to delete
 
-// There should be an li element for every todo
-// Each li element should contain .todoText
-// Each li element should show .completed
+// There should be a way to create delete buttons
+// There should be a delete button for each todo
+// Each li should have an id that has the todo position (index)
+// Delete buttons should have access to the todo id
+// Clicking delete should update the todoList.todos and the DOM
 
 var todoList = {
 	todos: [],
@@ -13,21 +15,13 @@ var todoList = {
 		});
 	},
 	changeTodo: function(index, todoTextParam) {
-		// this.todos[index] = newValue;
-		// if (index === undefined) {
-		// 	index = 0;
-		// }
 		this.todos[index].todoText = todoTextParam;
 	},
 	deleteTodo: function(index) {
-		// if (numberDeleted === undefined) {
-		// 	numberDeleted = 1;
-		// }
 		this.todos.splice(index, 1);
 	},
 	toggleCompleted: function(index) {
 		var todo = this.todos[index];
-		// todo.completed = !todo.completed; instead of this.todos[position].completed = !this.todos[position].completed;
 		todo.completed = !todo.completed;
 	},
 	toggleAll: function() {
@@ -52,17 +46,6 @@ var todoList = {
 	}
 };
 
-// var displayTodosButton = document.getElementById("displayTodosButton");
-// var toggleAllButton = document.getElementById("toggleAllButton");
-
-// displayTodosButton.addEventListener("click", function() {
-// 	todoList.displayTodos();
-// });
-
-// toggleAllButton.addEventListener("click", function() {
-// 	todoList.toggleAll();
-// }); 
-
 var handlers = {
 	addTodo: function() {
 		var addTodoTextInput = document.getElementById("addTodoTextInput");
@@ -78,11 +61,8 @@ var handlers = {
 		changeTodoTextInput.value = '';
 		view.displayTodos();
 	},
-	deleteTodo: function() {
-		var deleteTodoIndexInput = document.getElementById("deleteTodoIndexInput");
-		// var deleteTodoNumberDeletedInput = document.getElementById("deleteTodoNumberDeletedInput");
-		todoList.deleteTodo(deleteTodoIndexInput.valueAsNumber);
-		deleteTodoIndexInput.vaue = '';
+	deleteTodo: function(index) {
+		todoList.deleteTodo(index);
 		view.displayTodos();
 	},
 	toggleCompleted: function() {
@@ -112,14 +92,36 @@ var view = {
 			} else {
 				todoTextWithCompletion = "( ) " + currentTodo.todoText;
 			}
+
+			todoLi.id = i;
 			todoLi.textContent = todoTextWithCompletion;
+			todoLi.appendChild(this.createDeleteButton());
 			todosUl.appendChild(todoLi);
 		}
+	},
+	createDeleteButton: function() {
+		var deleteButton = document.createElement("button");
+		deleteButton.textContent = "Delete";
+		deleteButton.className = "deleteButton";
+		return deleteButton;
+	},
+	setUpEventListeners: function() {
+		var todosUl = document.querySelector("ul");
+
+		// This event listener is 'listening' to all clicks on the ul 
+		todosUl.addEventListener("click", function(event) {
+			// Get the element that was clicked on
+			var elementClicked = event.target;
+
+			// Check if element clicked is a delete button
+			if (elementClicked.className === "deleteButton") {
+				handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+			}
+		});
 	}
 };
 
-
-// todoList.displayTodos();
+view.setUpEventListeners();
 
 todoList.addTodoObject("first");
 todoList.addTodoObject("second");
@@ -127,15 +129,3 @@ todoList.addTodoObject("third");
 todoList.addTodoObject("fourth");
 todoList.addTodoObject("fifth");
 todoList.addTodoObject("sixth");
-
-// todoList.changeTodo(0, "changed");
-
-// todoList.toggleCompleted(0);
-// todoList.toggleCompleted(1);
-// todoList.toggleCompleted(2);
-// todoList.toggleCompleted(3);
-// todoList.toggleCompleted(4);
-// todoList.toggleCompleted(5);
-
-// todoList.deleteTodo(2, 2);
-// todoList.toggleAll();
