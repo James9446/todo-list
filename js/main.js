@@ -1,10 +1,7 @@
-// Watch and Code todo app version 10 Click to delete
+// Watch and Code todo app version 11 Destroy all for loops
 
-// There should be a way to create delete buttons
-// There should be a delete button for each todo
-// Each li should have an id that has the todo position (index)
-// Delete buttons should have access to the todo id
-// Clicking delete should update the todoList.todos and the DOM
+// todoList.toggleAll should use for each 
+// view.displayTodos should use for each
 
 var todoList = {
 	todos: [],
@@ -27,22 +24,18 @@ var todoList = {
 	toggleAll: function() {
 		var totalTodos = this.todos.length;
 		var completedTodos = 0;
-		for (var i = 0; i < this.todos.length; i++) {
-			if (this.todos[i].completed === true) {
+		this.todos.forEach(function(todo) {
+			if (todo.completed === true) {
 				completedTodos++;
 			}
-		}
-		if (completedTodos === totalTodos) {
-			for (var i = 0; i < this.todos.length; i++) {
-				this.todos[i].completed = false;
+		});
+		this.todos.forEach(function(todo) {
+			if (completedTodos === totalTodos) {
+				todo.completed = false;
+			} else {
+				todo.completed = true;
 			}
-		} else {
-			for (var i = 0; i < this.todos.length; i++) {
-				if (this.todos[i].completed === false) {
-					this.todos[i].completed = true;
-				}
-			}
-		}
+		});
 	}
 };
 
@@ -83,21 +76,21 @@ var view = {
 	displayTodos: function() {
 		var todosUl = document.querySelector("ul");		
 		todosUl.innerHTML = '';
-		for (var i = 0; i < todoList.todos.length; i++) {
+		todoList.todos.forEach(function(todo, index) {
 			var todoLi = document.createElement("li");
-			var currentTodo = todoList.todos[i];
+			// var currentTodo = todo;
 			var todoTextWithCompletion = '';
-			if (currentTodo.completed === true) {
-				todoTextWithCompletion = "(x) " + currentTodo.todoText;
+			if (todo.completed === true) {
+				todoTextWithCompletion = "(x) " + todo.todoText;
 			} else {
-				todoTextWithCompletion = "( ) " + currentTodo.todoText;
+				todoTextWithCompletion = "( ) " + todo.todoText;
 			}
-
-			todoLi.id = i;
+			todoLi.id = index;
 			todoLi.textContent = todoTextWithCompletion;
 			todoLi.appendChild(this.createDeleteButton());
 			todosUl.appendChild(todoLi);
-		}
+
+		}, this);
 	},
 	createDeleteButton: function() {
 		var deleteButton = document.createElement("button");
